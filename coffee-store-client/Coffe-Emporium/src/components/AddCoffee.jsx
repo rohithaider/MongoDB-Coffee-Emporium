@@ -1,4 +1,5 @@
 import swal from "sweetalert";
+import revalidateLoaderData from "../main";
 
 const AddCoffee = () => {
   function handleSubmit(e) {
@@ -23,6 +24,7 @@ const AddCoffee = () => {
         if (data.insertedId) {
           swal("Congratulations", "Successfully added to the list!", "success");
         }
+        revalidateLoaderData()
       });
   }
   return (
