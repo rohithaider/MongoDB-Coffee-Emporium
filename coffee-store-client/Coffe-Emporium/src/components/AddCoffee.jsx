@@ -1,3 +1,5 @@
+import swal from 'sweetalert';
+
 const AddCoffee = () => {
     function handleSubmit(e){
         e.preventDefault();
@@ -9,6 +11,18 @@ const AddCoffee = () => {
             coffeeData[key] = value
 
         })
+
+        fetch('http://localhost:5000/coffee',{
+            method:"POST",
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(coffeeData)
+        })
+        .then(res=>res.json())
+        .then(data=> {if(data.insertedId){
+          swal("Congratulations","Successfully added to the list!","success")
+        }})
         
 
     }

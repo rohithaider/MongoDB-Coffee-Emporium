@@ -28,14 +28,26 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    const coffees  = client.db("coffeeCollection").collection("coffee");
+
+    app.post('/coffee',async(req,res)=>{
+        const newCoffee = req.body;
+        
+        const result  = await coffees.insertOne(newCoffee);
+        res.send(result)
+    })
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-  } finally {
+  } catch (error){
     // Ensures that the client will close when you finish/error
-    await client.close();
+    console.error("Failed to connect to MongoDB",error)
   }
 }
 run().catch(console.dir);
