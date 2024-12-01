@@ -29,7 +29,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const coffees  = client.db("coffeeCollection").collection("coffee");
+    //!sending data from the API using GET method
 
+    app.get('/coffee',async(req,res)=>{
+      const cursor = coffees.find();
+      const result = await cursor.toArray();
+      res.send(result)
+    })
+
+    // !getting data from the add coffee form and adding to mongoDB
     app.post('/coffee',async(req,res)=>{
         const newCoffee = req.body;
         
